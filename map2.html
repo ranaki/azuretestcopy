@@ -8,13 +8,15 @@
 	<script src="https://js.arcgis.com/3.15/"></script>	
 	<script>
   		var map;
-		require(["esri/map", "dojo/domReady!"], function(Map) {
-  		map = new Map("mapDiv", {
-	    center: [-56.049, 38.485],
-	    zoom: 3,
-	    basemap: "streets"
-	  });
-	});
+		require([
+    "esri/map",
+    "esri/arcgis/utils",
+    "dojo/domReady!"
+    ], function(Map, arcgisUtils){
+  arcgisUtils.createMap("22fc21ffc7bc4f418d8e71be3e097873", "mapDiv").then(function (response) {
+      map = response.map;
+    });
+  });
 	</script>
 	<style>
 	  html, body, #mapDiv {
