@@ -1,33 +1,55 @@
 <!DOCTYPE html>
-<html>
+  <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>ArcGIS Javascript API Test1</title>
-	<link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
-	<script src="https://js.arcgis.com/3.15/"></script>	
-	<script>
-  		var map;
-		require([
-    "esri/map",
-    "esri/arcgis/utils",
-    "dojo/domReady!"
-    ], function(Map, arcgisUtils){
-  arcgisUtils.createMap("22fc21ffc7bc4f418d8e71be3e097873", "mapDiv").then(function (response) {
-      map = response.map;
+  <title>Create a Web Map</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+
+  <link rel="stylesheet" href="https://js.arcgis.com/3.15/esri/css/esri.css">
+  <style>
+    html,body,#mapDiv,.map.container{
+      padding:0;
+      margin:0;
+      height:100%;
+    }
+    #legendDiv{
+      background-color: #fff;
+      position: absolute !important;
+      z-index: 99;
+      top:10px;
+      right:20px;
+    }
+  </style>
+
+  <script>var dojoConfig = { parseOnLoad: true };</script>
+  <script src="https://js.arcgis.com/3.15compact/"></script>
+  <script>
+    var map,
+        webmapId = "1a40fa5cc1ab4569b79f45444d728067";
+    
+    require([
+      "esri/map",
+      "esri/arcgis/utils",
+      "esri/dijit/Legend",
+      "dojo/domReady!"
+      ], function (Map, arcgisUtils, Legend) {
+        arcgisUtils.createMap(webmapId, "mapDiv").then(function (response) {
+        map = response.map;
+
+        var legend = new Legend({
+            map: map,
+            layerInfos:(arcgisUtils.getLegendLayers(response))
+        }, "legendDiv");
+        
+        legend.startup();
     });
-  });
-	</script>
-	<style>
-	  html, body, #mapDiv {
-	    padding: 0;
-	    margin: 0;
-	    height: 100%;
-	  }
-	</style>
+    });
+  </script>
+
   </head>
-  <body class="claro">
-    <div>Test2</div>
-  	<div id="mapDiv"></div>
+
+  <body>
+    <div id="mapDiv"></div>
+    <div id="legendDiv"></div>
   </body>
-</html>
+  </html>
